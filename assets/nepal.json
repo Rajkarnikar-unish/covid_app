@@ -1,0 +1,18 @@
+{
+    "confirmed": 619635,
+    "recovered": 553342,
+    "deaths": 8675,
+    "country": "Nepal",
+    "population": 29304998,
+    "sq_km_area": 147181,
+    "life_expectancy": "57.8",
+    "elevation_in_meters": "3,265",
+    "continent": "Asia",
+    "abbreviation": "NP",
+    "location": "Southern and Central Asia",
+    "iso": 524,
+    "capital_city": "Kathmandu",
+    "lat": "28.1667",
+    "long": "84.25",
+    "updated": "2021/06/20 08:21:11+00"
+}
