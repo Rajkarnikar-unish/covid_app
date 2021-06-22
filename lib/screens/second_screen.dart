@@ -32,6 +32,7 @@ class _SecondScreenState extends State<SecondScreen> {
   void initState() {
     super.initState();
     covidData = services.fetchCovidData();
+    print(covidData);
   }
 
   final int? _count = 195;
@@ -59,12 +60,12 @@ class _SecondScreenState extends State<SecondScreen> {
             return ListView.builder(
               itemBuilder: (context, index) {
                 return Center(
-                  child: Text(
-                    'Country ${snapshot.data!.afghanistan}'
-                    // snapshot.data!.brazil.all.updated
-                    // snapshot.data!.global.all.confirmed.toString(),
-                    // snapshot.data![index].us.virginia.updated,
-                  ),
+                  // child: Text(
+                  //   'Country ${snapshot.data!.afghanistan}'
+                  //   // snapshot.data!.brazil.all.updated
+                  //   // snapshot.data!.global.all.confirmed.toString(),
+                  //   // snapshot.data![index].us.virginia.updated,
+                  // ),
                 );
               },
               itemCount: _count, //snapshot.data!.toString().length,
@@ -75,11 +76,3 @@ class _SecondScreenState extends State<SecondScreen> {
     );
   }
 }
-
-
-//  Center(
-              //   child: Text(
-              //     // snapshot.data.toString(),
-              //     // snapshot.data!.netherlands.all.country,
-              //   ),
-              // );

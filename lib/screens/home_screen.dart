@@ -1,9 +1,10 @@
 // import 'dart:convert';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:covid_app/screens/second_screen.dart';
+import 'package:covid_app/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+// import 'package:url_launcher/url_launcher.dart';
 
 import '../model/nepal_model.dart';
 
@@ -12,9 +13,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+final covidApi = 'https://covid-api.mmediagroup.fr/v1/cases?country=Nepal';
 Future<Nepal> fetchData() async {
-  final covidApi = 'https://covid-api.mmediagroup.fr/v1/cases?country=Nepal';
-
   final response = await http.get(Uri.parse(covidApi));
 
   if (response.statusCode == 200) {
@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 20.0),
           child: FutureBuilder<Nepal>(
             future: nepalData,
             builder: (context, snapshot) {
@@ -59,33 +60,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 // return Center(child: Text(snapshot.data!.all.country));
                 return Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 45.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'COVID-19 ',
-                            style: TextStyle(
-                              fontSize: 35,
-                              letterSpacing: 1.3,
-                              color: Colors.grey,
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'COVID-19 ',
+                          style: TextStyle(
+                            fontSize: 35,
+                            letterSpacing: 1.3,
+                            color: Colors.grey,
                           ),
-                          AnimatedTextKit(
-                            animatedTexts: [
-                              TypewriterAnimatedText('Cases',
-                                  textStyle: TextStyle(
-                                    fontSize: 35,
-                                    letterSpacing: 1.3,
-                                    color: Colors.grey,
-                                  ),
-                                  speed: const Duration(milliseconds: 500),
-                                  curve: Curves.slowMiddle),
-                            ],
-                          ),
-                        ],
-                      ),
+                        ),
+                        AnimatedTextKit(
+                          animatedTexts: [
+                            TypewriterAnimatedText('Cases',
+                                textStyle: TextStyle(
+                                  fontSize: 35,
+                                  letterSpacing: 1.3,
+                                  color: Colors.grey,
+                                ),
+                                speed: const Duration(milliseconds: 500),
+                                curve: Curves.slowMiddle),
+                          ],
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 120.0, right: 120.0),
@@ -93,31 +91,168 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 20.0, left: 15.0, right: 15.0, bottom: 10.0),
-                      child: Card(
-                        elevation: 10,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Text('Country: '),
-                              Text(
-                                snapshot.data!.all.country,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                    // DropdownButton(items: []),
+                    SizedBox(height: 20),
+                    Card(
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 15.0,
+                          horizontal: 20.0,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Country: ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
+                                Text(
+                                  snapshot.data!.all.country,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 210.0),
+                              child: Divider(
+                                color: Colors.grey,
                               ),
-                            ],
-                          ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Confirmed Cases: ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data!.all.confirmed.toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Recovered: ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data!.all.recovered.toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Deaths: ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data!.all.deaths.toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Updated at: ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data!.all.updated,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 30.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 160,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.redAccent,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.public,
+                                        color: Colors.white,
+                                      ),
+                                      TextButton(
+                                        child: Text(
+                                          'API',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: 160,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.redAccent,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.map_outlined,
+                                        color: Colors.white,
+                                      ),
+                                      TextButton(
+                                        child: Text(
+                                          'Map',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => MapScreen(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    ListTile(
-                      title: Text(snapshot.data!.all.country),
-                      subtitle:
-                          Text('Total Cases: ${snapshot.data!.all.confirmed}'),
                     ),
                   ],
                 );
@@ -128,14 +263,17 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondScreen()));
-          },
-          child: Icon(Icons.ac_unit, color: Colors.black,),
-          backgroundColor: Colors.white,
-        ),
       ),
     );
   }
+
+  // _launchUrl() async {
+  //   if(await canLaunch(covidApi)) {
+  //     await launch(covidApi);
+  //     print(covidApi);
+  //   } else {
+  //     throw 'Could not launch url';
+  //   }
+  // }
+
 }
